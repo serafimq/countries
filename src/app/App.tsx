@@ -1,34 +1,24 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { StateSchema } from '@/app/providers/StoreProvider';
-import { userActions, fetchUsers } from '@/entities/User';
-import { generateUser } from '@/shared/lib/createUser/createUser';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import classes from './App.module.scss';
+import { AppRouter } from '@/app/providers/router';
+import { useDispatch } from 'react-redux';
+import { userActions } from '@/entities/User';
 
 const App = () => {
-  const users = useSelector((state: StateSchema) => state.users.users);
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers())
+    dispatch(userActions.initAuthData());
   }, [dispatch])
 
-  const addNewUser = () => {
-    dispatch(userActions.addUser(generateUser()))
-  }
-
-  const removeUser = (id: string) => {
-    dispatch(userActions.removeUser({id}))
-  }
-  
   return (
-    <>
-      { users.map((user) => (
-        <div key={user.id} onClick={() => removeUser(user.id)}> Name:  {user.username} </div>
-      )) }
-      <div className={classes.hello}>Hello world</div>
-      <button onClick={addNewUser}>add user</button>
-    </>
+    <div className={classes.app}>
+        <Suspense fallback="">
+            <div className="content-page">
+                <AppRouter />
+            </div>
+        </Suspense>
+    </div>
   )
 }
 

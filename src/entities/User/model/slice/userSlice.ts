@@ -1,53 +1,31 @@
-import {createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import {User, UsersSchema, FetchUser} from '../types/user';
-import {ThunkConfig} from '@/app/providers/StoreProvider'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User, UsersSchema } from '../types/user';
+import { fetchUsers } from '../services/fetchUsers/fetchUsers';
+import { USER_LOCALSTORAGE_KEY } from '@/shared/const/localStorage';
 
 const initialState: UsersSchema = {
     users: [],
     isLoading: false,
     error: undefined,
-    data: undefined,
+    authData: undefined,
 };
-
-export const fetchUsers = createAsyncThunk<
-    FetchUser[],
-    void,
-    ThunkConfig<string>
->(
-    'users/fetchUsers',
-    async (_, thunkApi) => {
-        const { rejectWithValue } = thunkApi;
-        try {
-            const response = await fetch('https://jsonplaceholder.typicode.com/users');
-
-            if (!response.ok) {
-                throw new Error('Server Error');
-            }
-
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            return rejectWithValue('error');
-        }
-    }
-)
 
 const userSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-        addUser(state, action: PayloadAction<User>) {
-            state.users.push({
-                id: action.payload.id,
-                username: action.payload.username,
-                age: action.payload.age 
-            })
+        setAuthData: (state, action: PayloadAction<User>) => {
+            state.authData = action.payload;
         },
-        removeUser(state, action: PayloadAction<{id: string}>) {
-            const index = state.users.findIndex(user => user.id === action.payload.id);
-            if (index !== -1) {
-                state.users.splice(index, 1);
-              }
+        initAuthData: (state) => {
+            const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
+            if (user) {
+                state.authData = JSON.parse(user);
+            }
+        },
+        logout: (state) => {
+            state.authData = undefined;
+            localStorage.removeItem(USER_LOCALSTORAGE_KEY);
         }
     },
     extraReducers: (builder) => {
@@ -56,9 +34,9 @@ const userSlice = createSlice({
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<FetchUser[]>) => {
+            .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
                 state.isLoading = false;
-                state.data = action.payload;
+                state.users = action.payload;
             })
             .addCase(fetchUsers.rejected, (state, action) => {
                 state.isLoading = false;

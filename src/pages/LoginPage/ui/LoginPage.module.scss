@@ -1,0 +1,11 @@
+.loginPage__wrapper {
+    min-height: 100vh;
+    background-image: url('../assets/bg-intro-desktop.png');
+    background-color: hsl(330, 77%, 83%);
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 768px) {
+        background-image: url('../assets/bg-intro-mobile.png');
+    }
+}
