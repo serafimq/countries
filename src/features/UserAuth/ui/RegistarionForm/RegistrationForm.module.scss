@@ -1,0 +1,16 @@
+.form {
+    &__actionButton {
+        span {
+            font-weight: var(--fw-regular);
+        }
+    }
+    &__terms {
+        color: var(--clr-neutral-400);
+        font-size: 0.8rem;
+        span {
+            color: var(--clr-primary-400);
+            font-weight: var(--fw-bold);
+            cursor: pointer;
+        }
+    }
+}

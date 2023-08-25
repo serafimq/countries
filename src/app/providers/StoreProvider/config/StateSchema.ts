@@ -8,6 +8,7 @@ import { CombinedState } from 'redux';
 import { AxiosInstance } from 'axios';
 import { UsersSchema } from '@/entities/User';
 import { LoginSchema } from '@/features/UserAuth';
+import { NavigateOptions, To } from 'react-router-dom';
 // import { rtkApi } from '@/shared/api/rtkApi';
 
 export interface StateSchema {
@@ -38,6 +39,7 @@ export interface ReduxStoreWithManager extends EnhancedStore<StateSchema> {
 
 export interface ThunkExtraArg {
     api: AxiosInstance;
+    navigate: (to: To, options?: NavigateOptions) => void;
 }
 
 export interface ThunkConfig<T> {

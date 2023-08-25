@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.authPage {
+    &__wrapper {
+        font-family: var(--ff-primary);
+        min-height: 100vh;
+        background-image: url('./assets/bg-intro-desktop.png');
+        background-color: var(--clr-primary-400);
+        display: flex;
+        gap: 3rem;
+        align-items: center;
+        padding-inline: 10rem;
+    
+        @media (max-width: 768px) {
+            background-image: url('./assets/bg-intro-mobile.png');
+            flex-direction: column;
+            padding-inline: 1.5rem;
+            padding-block: 7rem;
+            gap: 5.5rem;
+        }   
+    }
+
+    &__content {
+        flex: 1 1 50%;
+        @media (max-width: 768px) {
+            text-align: center;
+            flex: none;
+        }
+    }
+
+    &__title {
+        font-size: 3rem;
+        line-height: 1.2;
+        margin-bottom: 3rem;
+    }
+
+    &__description {
+        font-size: 16px;
+    }
+}

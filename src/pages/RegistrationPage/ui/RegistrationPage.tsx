@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import '../../styles/AuthPages/base.scss';
 import clsAuth from '../../styles/AuthPages/AuthPages.module.scss';
-import cls from './LoginPage.module.scss';
-import LoginForm from '@/features/UserAuth/ui/LoginForm/LoginForm';
+import cls from './RegistrationPage.module.scss';
+import RegistrationForm from '@/features/UserAuth/ui/RegistarionForm/RegistrationForm';
 
-const LoginPage = memo(() => {
+const RegistrationPage = memo(() => {
     return <div className={clsAuth.authPage__wrapper}>
         <div className={clsAuth.authPage__content}>
             <h1 className={clsAuth.authPage__title}>Learn to code by watching others</h1>
@@ -13,8 +13,8 @@ const LoginPage = memo(() => {
             but understanding how developers think is invaluable.
             </p>
         </div>
-        <LoginForm className={clsAuth.authPage__form} />
+        <RegistrationForm />
     </div>;
 });
 
-export default LoginPage;
+export default RegistrationPage;
