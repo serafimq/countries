@@ -8,23 +8,21 @@ import {
 } from '../../model/selectors/getLoginState/getLoginState';
 import { loginByEmail } from '../../model/services/loginByEmail/loginByEmail';
 import { loginActions, loginReducer } from '../../model/slice/loginSlice';
-import cls from './LoginForm.module.scss';
 import clsAuth from '../styles/Auth.module.scss';
 import { DynamicModuleLoader, ReducersList } from '@/shared/lib/components/DynaminModuleLoader/DynaminModuleLoader';
-import { AButton, ButtonTheme } from '@/shared/ui/AuthUI/AButton';
+import { AButton } from '@/shared/ui/AButton';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { AInput } from '@/shared/ui/AuthUI/AInput';
+import { AInput } from '@/shared/ui/AInput';
 
 export interface LoginFormProps {
     className?: string;
-    onSuccess?: () => void;
 }
 
 const initialReducers: ReducersList = {
     loginForm: loginReducer
 }
 
-const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
+const LoginForm = memo(({ className }: LoginFormProps) => {
     const dispatch = useAppDispatch();
     const email = useSelector(getLoginEmail);
     const password = useSelector(getLoginPassword);
@@ -44,30 +42,31 @@ const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
     );
 
     const onLoginClick = useCallback(async () => {
-        const result = await dispatch(loginByEmail({ email, password }));
-        if (result.meta.requestStatus === 'fulfilled') {
-            // onSuccess();
-        }
-    }, [onSuccess, dispatch, password, email]);
+        await dispatch(loginByEmail({ email, password }));
+    }, [dispatch, password, email]);
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
-            <div className={clsAuth.form__wrapper}>
+            {isLoading && ( <div>Loading</div> )}
+            {!isLoading && (<div className={clsAuth.form__wrapper}>
                 <div className={clsAuth.form}>
+                    {error && ( <div>Error</div> )}
                     <AInput
                         placeholder='Email Address'
                         value={email}
+                        name='email'
                         onChange={onChangeEmail}
                     />
                     <AInput
                         type='text'
                         placeholder='Password'
                         value={password}
+                        name='password'
                         onChange={onChangePassword}
                     />
                     <AButton onClick={onLoginClick} isUppercase>Login</AButton>
                 </div>
-            </div>
+            </div>)}
         </DynamicModuleLoader>
     );
 });

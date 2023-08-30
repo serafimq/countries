@@ -4,3 +4,10 @@ export interface LoginSchema {
     isLoading: boolean;
     error?: string;
 }
+
+export interface LoginByEmailProps {
+    email: string;
+    password: string;
+}
+
+export type InputPropName = keyof LoginByEmailProps;

@@ -1,0 +1,33 @@
+.VInputWrapper {
+    text-align: right;  
+    position: relative;
+}
+
+.readonly {
+    opacity: 0.7;
+}
+
+.placeholder {
+    margin-right: 0.5rem;
+}
+
+.input {
+    font-weight: var(--fw-semibold);
+    padding: 1rem 1.5rem;
+    width: 100%;
+    color: var(--clr-neutral-900);
+
+    &:focus {
+        outline: none;
+    }
+    &.error {
+        border: 0.1rem solid var(--clr-primary-400);
+        border-radius: 0.2rem;
+    }
+}
+
+.icon {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+}

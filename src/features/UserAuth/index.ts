@@ -1,2 +1,2 @@
-export type { LoginSchema } from './model/types/loginSchema';
+export type { LoginSchema, LoginByEmailProps, InputPropName } from './model/types/loginSchema';
 export { loginReducer } from './model/slice/loginSlice';

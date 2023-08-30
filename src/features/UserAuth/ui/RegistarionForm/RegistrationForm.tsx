@@ -1,79 +1,74 @@
-// import { useSelector } from 'react-redux';
-import { memo, useCallback } from 'react';
-// import {
-//     getLoginEmail,
-//     getLoginPassword,
-//     getLoginError,
-//     getLoginIsLoading
-// } from '../../model/selectors/getLoginState/getLoginState';
+import { memo } from 'react';
+import { z } from 'zod';
 import cls from '../RegistarionForm/RegistrationForm.module.scss';
 import clsAuth from '../styles/Auth.module.scss';
-import { DynamicModuleLoader, ReducersList } from '@/shared/lib/components/DynaminModuleLoader/DynaminModuleLoader';
-// import { userActions } from '@/entities/User';
-import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { AButton, ButtonTheme } from '@/shared/ui/AuthUI/AButton';
-import { AInput } from '@/shared/ui/AuthUI/AInput';
+import { AButton, ButtonTheme } from '@/shared/ui/AButton';
+import { VForm, useForm } from '@/shared/ui/VForm';
+import { VInput } from '@/shared/ui/VInput';
 
-export interface RegistrationForm {
+export interface RegistrationFormProps {
     className?: string;
-    onSuccess?: () => void;
 }
 
-const initialReducers: ReducersList = {}
+export interface RegistrationFormFields {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string
+}
 
-const RegistrationForm = memo(({}: RegistrationForm) => {
-    const dispatch = useAppDispatch();
-    // const email = useSelector(getLoginEmail);
-    // const password = useSelector(getLoginPassword);
-    // const error = useSelector(getLoginError);
-    // const isLoading = useSelector(getLoginIsLoading);
+const registrationFormSchema = z.object({
+  firstName: z.string().min(1, 'First Name cannot be empty'),
+  lastName:  z.string().min(1, 'Last Name cannot be empty'),
+  email: z.string().email('Looks like this is not an email'),
+  password: z
+    .string()
+    .min(6, 'Please choose a longer password')
+    .max(256, 'Consider using a short password'),
+});
 
-    // const onChangeEmail = useCallback(
-    //     (e: React.ChangeEvent<HTMLInputElement>) => {
-    //         dispatch(loginActions.setEmail(e.target.value));
-    //     },
-    //     [dispatch],
-    // );
-
-    // const onChangePassword = useCallback(
-    //     (e: React.ChangeEvent<HTMLInputElement>) => {
-    //         dispatch(loginActions.setPassword(e.target.value));
-    //     },
-    //     [dispatch],
-    // );
-
-    // const onLoginClick = useCallback(async () => {
-    //     const result = await dispatch(loginByEmail({ email, password }));
-    //     if (result.meta.requestStatus === 'fulfilled') {
-    //         // onSuccess();
-    //     }
-    // }, [onSuccess, dispatch, password, email]);
-
-    // const onLogoutClick = useCallback(() => {
-    //     dispatch(userActions.logout());
-    // }, [dispatch]);
-
+const RegistrationForm = memo(({}: RegistrationFormProps) => {
+    const form = useForm({
+        schema: registrationFormSchema,
+    });
     return (
-        <DynamicModuleLoader reducers={initialReducers}>
-            <div className={clsAuth.form__wrapper}>
-                <AButton
-                    className={cls.form__actionButton}
-                    theme={ButtonTheme.ACCENT}
-                >
-                    Try it free 7 days <span>then $20/mo. thereafter</span>
-                </AButton>
-                <div className={clsAuth.form}>
-                    <AInput placeholder="First Name" />
-                    <AInput placeholder="Last Name" />
-                    <AInput placeholder="Email Address" />
-                    <AInput placeholder="Password" />
-                    <AButton isUppercase>Claim your free trial</AButton>
-                    <p className={cls.form__terms}> 
-                        By clicking the button, you are agreeing to our <span>Terms and Services</span>
-                    </p>
-                </div>
-            </div>
-        </DynamicModuleLoader>
+        <div className={clsAuth.form__wrapper}>
+            <AButton
+                className={cls.form__actionButton}
+                theme={ButtonTheme.ACCENT}
+            >
+                Try it free 7 days <span>then $20/mo. thereafter</span>
+            </AButton>
+            <VForm 
+                form={form} 
+                onSubmit={(values) => console.log(values)}
+                className={clsAuth.form}
+            >
+                <VInput
+                    placeholder="First Name"
+                    {...form.register('firstName')}
+                />
+                <VInput
+                    placeholder="Last name"
+                    {...form.register('lastName')}
+                />
+                <VInput
+                    type="email"
+                    placeholder="Email Address"
+                    {...form.register('email')}
+                />
+
+                <VInput
+                    type="password"
+                    placeholder="Password"
+                    {...form.register('password')}
+                />
+                <AButton isUppercase type="submit">Claim your free trial</AButton>
+                <p className={cls.form__terms}> 
+                    By clicking the button, you are agreeing to our <span>Terms and Services</span>
+                </p>
+            </VForm>
+        </div>
     );
 });
 

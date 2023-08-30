@@ -1,6 +1,6 @@
 import { FC, lazy } from 'react';
-import { RegistrationForm } from './RegistrationForm';
+import { RegistrationFormProps } from './RegistrationForm';
 
-export const RegistrationAsync = lazy<FC<RegistrationForm>>(
+export const RegistrationAsync = lazy<FC<RegistrationFormProps>>(
     () => import('./RegistrationForm'),
 );
