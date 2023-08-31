@@ -1,23 +1,33 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "username": "admin",
-            "email": "admin@gmail.com",
-            "password": "admin123"
-        },
-        {
-            "id": 2,
-            "username": "user",
-            "email": "user@gmail.com",
-            "password": "user123"
-        },
-        {
-            "id": 3,
-            "username": "manager",
-            "email": "manager@gmail.com",
-            "password": "manager123"
-        }
-    ],
-    "posts": [{"id": 1}]
-  }
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "email": "admin@gmail.com",
+      "password": "admin123"
+    },
+    {
+      "id": 2,
+      "username": "user",
+      "email": "user@gmail.com",
+      "password": "user123"
+    },
+    {
+      "id": 3,
+      "username": "manager",
+      "email": "manager@gmail.com",
+      "password": "manager123"
+    },
+    {
+      "username": "user13",
+      "email": "user13@mail.ru",
+      "password": "user13",
+      "id": 4
+    }
+  ],
+  "posts": [
+    {
+      "id": 1
+    }
+  ]
+}

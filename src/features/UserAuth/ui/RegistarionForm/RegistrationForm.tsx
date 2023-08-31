@@ -1,25 +1,20 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { z } from 'zod';
 import cls from '../RegistarionForm/RegistrationForm.module.scss';
 import clsAuth from '../styles/Auth.module.scss';
 import { AButton, ButtonTheme } from '@/shared/ui/AButton';
 import { VForm, useForm } from '@/shared/ui/VForm';
 import { VInput } from '@/shared/ui/VInput';
+import { RegistrationUserProps } from '../../model/types/registrationSchema';
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { createUser } from '../../model/services/createUser/createUser';
 
 export interface RegistrationFormProps {
     className?: string;
 }
 
-export interface RegistrationFormFields {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string
-}
-
 const registrationFormSchema = z.object({
-  firstName: z.string().min(1, 'First Name cannot be empty'),
-  lastName:  z.string().min(1, 'Last Name cannot be empty'),
+  username:  z.string().min(1, 'User Name cannot be empty'),
   email: z.string().email('Looks like this is not an email'),
   password: z
     .string()
@@ -28,9 +23,16 @@ const registrationFormSchema = z.object({
 });
 
 const RegistrationForm = memo(({}: RegistrationFormProps) => {
+    const dispatch = useAppDispatch();
     const form = useForm({
         schema: registrationFormSchema,
     });
+
+    const onSubmit = useCallback(async (data: RegistrationUserProps) => {
+        console.log('onSubmit', data);
+        await dispatch(createUser(data));
+    }, [dispatch]);
+    
     return (
         <div className={clsAuth.form__wrapper}>
             <AButton
@@ -41,16 +43,12 @@ const RegistrationForm = memo(({}: RegistrationFormProps) => {
             </AButton>
             <VForm 
                 form={form} 
-                onSubmit={(values) => console.log(values)}
+                onSubmit={(values) => onSubmit(values)}
                 className={clsAuth.form}
             >
                 <VInput
-                    placeholder="First Name"
-                    {...form.register('firstName')}
-                />
-                <VInput
-                    placeholder="Last name"
-                    {...form.register('lastName')}
+                    placeholder="User Name"
+                    {...form.register('username')}
                 />
                 <VInput
                     type="email"
