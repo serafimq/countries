@@ -1,0 +1,12 @@
+.Navigation {
+    &__gap {
+        margin-left: auto;
+    }
+}
+
+.item {
+    padding: 0.4rem 1rem;
+    &:hover {
+        color: var(--clr-neutral-900);
+    }
+}

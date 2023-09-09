@@ -31,9 +31,32 @@
 }
 
 .primary {
-background-color: var(--clr-primary-500);
+    background-color: var(--clr-primary-500);
 }
 
 .accent {
-background-color: var(--clr-accent-400);
+    background-color: var(--clr-accent-400);
+}
+
+.main {
+    background-color: var(--clr-neutral-900);
+    border: 0.1rem solid var(--clr-neutral-900);
+    border-radius: 0.6rem;
+    transition: all 0.3s ease-in-out;
+    padding: 0.5rem 2rem;
+
+    @media (max-width: 768px) {
+        padding: 0.4rem 1rem;
+        font-size: 1rem;
+    }
+        
+    @media (max-width: 560px) {
+        padding-block: 1rem;
+        font-size: 1.4rem;
+    }
+
+    &:hover {
+        background-color: transparent;
+        color: var(--clr-neutral-900);
+    }
 }

@@ -5,6 +5,7 @@ import cls from './AButton.module.scss';
 export enum ButtonTheme {
     PRIMARY = 'primary',
     ACCENT = 'accent',
+    MAIN = 'main',
 }
 
 interface AButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

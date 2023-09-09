@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@500;700&display=swap');
+
+.main__wrapper {
+    font-family: var(--ff-primary);
+    background-color: var(--clr-neutral-100);
+    min-height: 100vh;
+}
+
+.main__r {
+    font-family: var(--ff-primary);
+    background-color: var(--clr-neutral-100);
+    background-image: url('../assets/image-hero-desktop.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    
+    @media (max-width: 768px) {
+        background-image: url('../assets/image-hero-mobile.png');
+    } 
+}

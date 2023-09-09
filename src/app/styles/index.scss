@@ -14,8 +14,25 @@ html {
     }
 }
 
+a {
+    color: inherit;
+}
+
+.button {
+    @media (max-width: 560px) {
+        width: 100%;
+        text-align: center;
+    }
+}
+
 .page,
 .page__body
 #root {
     height: 100%;
+}
+
+.page__body {
+    &.isHidden {
+        overflow: hidden;
+    }
 }

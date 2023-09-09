@@ -7,6 +7,7 @@ import {
     getRouteMain,
     getRouteLogin,
     getRouteRegistration,
+    getRouteAbout,
 } from '@/shared/const/router';
 import { AppRoutesProps } from '@/shared/types/router';
 
@@ -22,7 +23,11 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.REGISTRATION]: {
         path: getRouteRegistration(),
         element: <RegistrationPage />,
-        // authOnly: true,
+    },
+    [AppRoutes.ABOUT]: {
+        path: getRouteAbout(),
+        element: <RegistrationPage />,
+        authOnly: true,
     },
     [AppRoutes.NOT_FOUND]: {
         path: '*',
